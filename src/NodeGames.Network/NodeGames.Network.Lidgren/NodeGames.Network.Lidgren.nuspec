@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NodeGames.Network.Lidgren</id>
+    <version>0.1.1-beta</version>
+    <authors>stefanmielke</authors>
+    <owners>stefanmielke</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Lidgren implementation for the high-level library for gaming networks.</description>
+    <releaseNotes>Initial public release.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>network game monogame lidgren</tags>
+	<dependencies>
+      <dependency id="NodeGames.Network" version="0.1-beta" />
+      <dependency id="Lidgren.Network" version="1.0.2" />
+    </dependencies>
+  </metadata>
+</package>
