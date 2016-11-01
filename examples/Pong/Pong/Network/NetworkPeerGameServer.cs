@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Linq;
+using Microsoft.Xna.Framework;
 using NodeGames.Network.Network;
 using Pong.Actors;
 
@@ -19,7 +20,7 @@ namespace Pong.Network
         /// <param name="approvalMessage"></param>
         protected override bool ApproveConnection(string approvalMessage)
         {
-            return approvalMessage == "PongGame" && PongGame.Instance.Actors.Count == 2;
+            return approvalMessage == "PongGame" && PongGame.Instance.Actors.OfType<Bar>().Count() == 1;
         }
 
         /// <summary>

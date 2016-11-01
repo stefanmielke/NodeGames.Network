@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.BitmapFonts;
 using NodeGames.Network.Lidgren;
 using NodeGames.Network.Network;
 using NodeGames.Network.Network.Implementations;
@@ -14,7 +15,9 @@ namespace Pong
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
         public INetworkImplementation Network { get; private set; }
+        public BitmapFont Font { get; private set; }
 
         public static PongGame Instance { get; private set; }
 
@@ -36,6 +39,8 @@ namespace Pong
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            Font = Content.Load<BitmapFont>("font/Big");
         }
 
         protected override void Update(GameTime gameTime)
@@ -75,6 +80,11 @@ namespace Pong
 
             _spriteBatch.Begin();
 
+            if (!_started)
+            {
+                _spriteBatch.DrawString(Font, "Press '1' to create, '2' to join", new Vector2(200,380), Color.White);
+            }
+
             foreach (var actor in Actors)
             {
                 actor.Draw(_spriteBatch);
@@ -93,6 +103,7 @@ namespace Pong
                 // actors controlled by the server
                 Actors.Add(new Bar(1, new Vector2(10, 10), false));
                 Actors.Add(new Ball(2, new Vector2(400, 200), false));
+                Actors.Add(new GameState(4, new Vector2(400, 10), false));
 
                 Network = new NetworkLidgren<NetworkPeerGameServer, NetworkPeerGameClient>(new NetworkConfiguration
                 {

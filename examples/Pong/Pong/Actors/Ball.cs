@@ -11,10 +11,20 @@ namespace Pong.Actors
     {
         private Vector2 _speed;
         private readonly Random _random;
+        private readonly Vector2 _initialLocation;
 
         public Ball(int id, Vector2 initialLocation, bool isRemote) : base(id, initialLocation, new Rectangle(0, 0, 20, 20), isRemote)
         {
+            _initialLocation = initialLocation;
+
             _random = new Random();
+
+            ResetBall();
+        }
+
+        private void ResetBall()
+        {
+            Location = _initialLocation;
 
             var xSpeed = _random.Next(0, 2) == 0 ? -.4f : .4f;
             var ySpeed = GetRandomNumber(-.4f, .4f);
@@ -32,7 +42,22 @@ namespace Pong.Actors
 
                 Location += _speed * gameTime.ElapsedGameTime.Milliseconds;
 
-                if (Location.X > 800 - BoundBox.Width || Location.X < 0 || actors.OfType<Bar>().Any(CollidesWith))
+                // score!
+                if (Location.X > 800 || Location.X < 0 - BoundBox.Width)
+                {
+                    var scoreObject = actors.OfType<GameState>().First();
+                    if (Location.X > 800)
+                        scoreObject.AddPointLeft();
+                    else
+                        scoreObject.AddPointRight();
+
+                    ResetBall();
+
+                    return;
+                }
+
+                // simple collision
+                if (actors.OfType<Bar>().Any(CollidesWith))
                 {
                     _speed.X *= -1;
                 }

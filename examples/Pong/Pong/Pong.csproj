@@ -42,6 +42,7 @@
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\Ball.cs" />
     <Compile Include="Actors\Bar.cs" />
+    <Compile Include="Actors\GameState.cs" />
     <Compile Include="Network\NetworkPeerGameClient.cs" />
     <Compile Include="Network\NetworkPeerGameServer.cs" />
     <Compile Include="PongGame.cs" />

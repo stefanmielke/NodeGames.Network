@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Microsoft.Xna.Framework;
 using NodeGames.Network.Network;
 using Pong.Actors;
 
@@ -6,11 +9,13 @@ namespace Pong.Network
 {
     public class NetworkPeerGameClient : NetworkPeerClient
     {
-        private readonly int _barHashedName;
+        private readonly Dictionary<int, Type> _hashedNames = new Dictionary<int, Type>();
 
         public NetworkPeerGameClient() : base(1, typeof(NetworkPeerGameClient).Assembly)
         {
-            _barHashedName = CompatibilityManager.GetHashCode(typeof(Bar).Name);
+            _hashedNames.Add(CompatibilityManager.GetHashCode(typeof(Bar).Name), typeof(Bar));
+            _hashedNames.Add(CompatibilityManager.GetHashCode(typeof(Ball).Name), typeof(Ball));
+            _hashedNames.Add(CompatibilityManager.GetHashCode(typeof(GameState).Name), typeof(GameState));
         }
 
         /// <summary>
@@ -23,13 +28,16 @@ namespace Pong.Network
         /// <returns></returns>
         protected override INetworkedActor CreateRemoteActorByName(int hashedClassName, int id, int x, int y)
         {
-            Actor actor;
-            if (hashedClassName == _barHashedName)
-                actor = new Bar(id, new Vector2(x, y), true);
-            else
-                actor = new Ball(id, new Vector2(x, y), true);
+            Actor actor = null;
 
-            PongGame.Instance.Actors.Add(actor);
+            if (_hashedNames.ContainsKey(hashedClassName))
+            {
+                actor = Activator.CreateInstance(_hashedNames[hashedClassName], id, new Vector2(x, y), true) as Actor;
+
+                if (actor != null)
+                    PongGame.Instance.Actors.Add(actor);
+            }
+
             return actor;
         }
 

@@ -10,8 +10,8 @@ namespace Pong.Actors
     public abstract class Actor : INetworkedActor
     {
         public int Id { get; }
-        public bool ReplicateProperties { get; }
-        public bool ReplicateMovement { get; }
+        public bool ReplicateProperties { get; protected set; }
+        public bool ReplicateMovement { get; protected set; }
         public bool IsDirty { get; set; }
         public bool IsMovementDirty { get; set; }
         public bool IsMarkedToDestroy { get; set; }
@@ -60,7 +60,7 @@ namespace Pong.Actors
         /// <summary>
         /// This code prepares the message on the server to send properties to all the clients when IsDirty is true.
         /// </summary>
-        public void Serialize(INetworkMessageOut message)
+        public virtual void Serialize(INetworkMessageOut message)
         {
         }
 
@@ -70,7 +70,7 @@ namespace Pong.Actors
         /// Remember to keep the exact same type serialized and in the same order.
         /// </summary>
         /// <param name="message"></param>
-        public void Deserialize(INetworkMessageIn message)
+        public virtual void Deserialize(INetworkMessageIn message)
         {
         }
 
