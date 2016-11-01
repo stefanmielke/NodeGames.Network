@@ -14,7 +14,7 @@ namespace NodeGames.Network.Network
 
         private readonly Dictionary<long, ReadyConnection> _readyConnections;
 
-        protected NetworkPeerServer(Assembly actorsAssembly) : base(actorsAssembly)
+        protected NetworkPeerServer(float tickTimesPerSecond, Assembly actorsAssembly) : base(tickTimesPerSecond, actorsAssembly)
         {
             _actorsToDestroy = new List<int>();
             _actorsToCreate = new List<INetworkedActor>();
@@ -40,7 +40,7 @@ namespace NodeGames.Network.Network
             _lastLevelChange = new LevelChange(newGameState, worldBuilder, levelName, width, height);
         }
 
-        internal override void EndUpdate(bool hasConnections, Rectangle cameraView, float tickTime)
+        internal override void EndUpdate(bool hasConnections)
         {
             if (!hasConnections)
             {
@@ -64,7 +64,7 @@ namespace NodeGames.Network.Network
 
             SendActorDestruction();
 
-            SendLocalActorsReplication(cameraView);
+            SendLocalActorsReplication();
         }
 
         private void SendLevelChange(LevelChange levelChange)
@@ -123,6 +123,8 @@ namespace NodeGames.Network.Network
 
             var newPlayer = CreateRemotePlayer(playerName);
 
+            Actors.Add(newPlayer);
+
             var outMessage = CreateMessage(NetworkMessageType.ActorRequestPlayerActor);
 
             AppendActorCreationMessage(outMessage, newPlayer);
@@ -172,18 +174,8 @@ namespace NodeGames.Network.Network
             NetworkImplementation.SendChatMessage(message);
         }
 
-        private void SendLocalActorsReplication(Rectangle cameraView)
+        private void SendLocalActorsReplication()
         {
-            var cameraRectangle = cameraView;
-            cameraRectangle.X = 0;
-            cameraRectangle.Y = 0;
-
-            var cameraWidthOffset = cameraRectangle.Width;
-            var cameraHeightOffset = cameraRectangle.Height;
-
-            cameraRectangle.Width *= 3;
-            cameraRectangle.Height *= 3;
-
             var localActors = Actors;
 
             var sendingMovementActors = new List<INetworkedActor>(localActors.Count);
@@ -196,12 +188,6 @@ namespace NodeGames.Network.Network
                 {
                     continue;
                 }
-
-                var currentCameraRectangle = cameraRectangle;
-                var currentPlayerLocation = connectionPlayerActor.GetLocation();
-
-                currentCameraRectangle.X += currentPlayerLocation.X - cameraWidthOffset;
-                currentCameraRectangle.Y += currentPlayerLocation.Y - cameraHeightOffset;
 
                 sendingMovementActors.Clear();
                 sendingPropertiesActors.Clear();

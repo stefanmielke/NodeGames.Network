@@ -94,9 +94,9 @@ namespace NodeGames.Network.Lidgren
             msg.SenderConnection.Deny();
         }
 
-        public void Update(Rectangle cameraView, float tickTime)
+        public void Update(float tickTime)
         {
-            _networkPeer.Update(cameraView, tickTime);
+            _networkPeer.Update(tickTime);
         }
 
         public void CreateActor(INetworkedActor actor)

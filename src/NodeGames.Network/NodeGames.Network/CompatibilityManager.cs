@@ -1,6 +1,6 @@
 ﻿namespace NodeGames.Network
 {
-    internal static class CompatibilityManager
+    public static class CompatibilityManager
     {
         public static int GetHashCode(string name)
         {

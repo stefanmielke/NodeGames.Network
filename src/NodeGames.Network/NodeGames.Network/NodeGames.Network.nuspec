@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>NodeGames.Network</id>
-    <version>0.1-beta</version>
+    <version>0.1.4-beta</version>
     <authors>stefanmielke</authors>
     <owners>stefanmielke</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

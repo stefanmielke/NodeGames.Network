@@ -21,7 +21,7 @@ namespace NodeGames.Network.Network.Implementations
         void ApproveMessage(INetworkMessageIn message);
         void DisapproveMessage(INetworkMessageIn message);
 
-        void Update(Rectangle cameraView, float tickTime);
+        void Update(float tickTime);
 
         void CreateActor(INetworkedActor actor);
         void DestroyActor(INetworkedActor actor);

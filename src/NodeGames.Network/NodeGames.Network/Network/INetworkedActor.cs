@@ -16,7 +16,6 @@ namespace NodeGames.Network.Network
 
         void SetLocation(int x, int y);
         Point GetLocation();
-        Rectangle GetBoundBox();
 
         void RemoteDestroyed();
     }

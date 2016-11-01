@@ -6,7 +6,7 @@ namespace NodeGames.Network.Network
 {
     public abstract class NetworkPeerClient : NetworkPeer
     {
-        protected NetworkPeerClient(Assembly actorsAssembly) : base(actorsAssembly)
+        protected NetworkPeerClient(float tickTimesPerSecond, Assembly actorsAssembly) : base(tickTimesPerSecond, actorsAssembly)
         {
         }
 

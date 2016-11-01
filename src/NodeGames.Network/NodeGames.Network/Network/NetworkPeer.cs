@@ -19,8 +19,14 @@ namespace NodeGames.Network.Network
         public INetworkImplementation NetworkImplementation { protected get; set; }
         protected readonly List<INetworkedActor> Actors;
 
-        protected NetworkPeer(Assembly actorsAssembly)
+        public static bool Updated { get; private set; }
+        private static double _currentUpdateSkip;
+        private static double _startedUpdate;
+        private readonly float _tickTimesPerSecond;
+
+        protected NetworkPeer(float tickTimesPerSecond, Assembly actorsAssembly)
         {
+            _tickTimesPerSecond = tickTimesPerSecond;
             Actors = new List<INetworkedActor>();
             _remoteMethods = new Dictionary<int, string>();
             _methodCalls = new Dictionary<int, Dictionary<int, CallMethod>>(5);
@@ -48,8 +54,20 @@ namespace NodeGames.Network.Network
             }
         }
 
-        public void Update(Rectangle cameraView, float tickTime)
+        public void Update(double totalMilliseconds)
         {
+            Updated = false;
+            
+            // todo: fix calculation here
+            _currentUpdateSkip = totalMilliseconds - _startedUpdate;
+            if (_currentUpdateSkip < _tickTimesPerSecond)
+                return;
+
+            _currentUpdateSkip = 0;
+            _startedUpdate = totalMilliseconds;
+
+            Updated = true;
+
             if (!NetworkImplementation.IsConnected)
             {
                 _methodCalls.Clear();
@@ -122,7 +140,7 @@ namespace NodeGames.Network.Network
             }
             _methodCalls.Clear();
 
-            EndUpdate(NetworkImplementation.HasConnections, cameraView, tickTime);
+            EndUpdate(NetworkImplementation.HasConnections);
         }
 
         private void SendActorRemoteMethodCall(int actorRemoteId, int methodName, bool reliable, params object[] parameters)
@@ -209,7 +227,7 @@ namespace NodeGames.Network.Network
             }
         }
 
-        internal virtual void EndUpdate(bool hasConnections, Rectangle cameraView, float tickTime)
+        internal virtual void EndUpdate(bool hasConnections)
         {
         }
 
