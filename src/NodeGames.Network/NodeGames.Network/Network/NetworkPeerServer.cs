@@ -28,8 +28,21 @@ namespace NodeGames.Network.Network
             return string.Empty;
         }
 
+        /// <summary>
+        /// Create a remote player on the server.
+        /// </summary>
+        /// <param name="playerName">Name of the player on the client (not implemented yet)</param>
         protected abstract INetworkedActor CreateRemotePlayer(string playerName);
+
+        /// <summary>
+        /// Remove a remote player from the game.
+        /// </summary>
+        /// <param name="player"></param>
         protected abstract void RemoveRemotePlayer(INetworkedActor player);
+
+        /// <summary>
+        /// What happens when this instance receives a text chat?
+        /// </summary>
         protected abstract void ReceivedChatMessage(string text);
 
         public void SendServerTravel(byte newGameState, string worldBuilder, string levelName, int width, int height)

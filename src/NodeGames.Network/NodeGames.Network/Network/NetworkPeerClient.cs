@@ -10,11 +10,44 @@ namespace NodeGames.Network.Network
         {
         }
 
+        /// <summary>
+        /// Create a remote actor on a client based on its hashed name.
+        /// </summary>
+        /// <param name="hashedClassName">String hashed with CompatibilityManager.GetHashCode(Actor.GetType().Name)</param>
+        /// <param name="id">Remote Id of the actor.</param>
+        /// <param name="x">X position of the actor on the server.</param>
+        /// <param name="y">Y position of the actor on the server.</param>
+        /// <returns></returns>
         protected abstract INetworkedActor CreateRemoteActorByName(int hashedClassName, int id, int x, int y);
+
+        /// <summary>
+        /// Create a local player on the client.
+        /// </summary>
+        /// <param name="id">Remote Id of the actor owned by this client.</param>
+        /// <param name="x">X position of the actor on the server.</param>
+        /// <param name="y">Y position of the actor on the server.</param>
+        /// <returns></returns>
         protected abstract INetworkedActor CreateLocalPlayer(int id, int x, int y);
+
+        /// <summary>
+        /// Change the game state to the one sent
+        /// </summary>
         protected abstract void ChangeGameState(byte newGameState, string levelName);
+
+        /// <summary>
+        /// What happens when this instance disconnects?
+        /// </summary>
         protected abstract void HandleDisconnected();
+
+        /// <summary>
+        /// What happens when a client disconnects?
+        /// </summary>
+        /// <param name="id">Id of the disconnected client</param>
         protected abstract void HandlePlayerDisconnected(int id);
+
+        /// <summary>
+        /// What happens when this instance receives a text chat?
+        /// </summary>
         protected abstract void ReceivedChatMessage(string text);
 
         internal override void HandleActorReplication(INetworkMessageIn msg)

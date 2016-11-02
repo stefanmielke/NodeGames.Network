@@ -24,6 +24,7 @@ namespace NodeGames.Network.Network
         private static double _startedUpdate;
         private readonly float _tickTimesPerSecond;
 
+        // todo: remove ticks per second here
         protected NetworkPeer(float tickTimesPerSecond, Assembly actorsAssembly)
         {
             _tickTimesPerSecond = tickTimesPerSecond;
@@ -203,11 +204,24 @@ namespace NodeGames.Network.Network
         {
         }
 
+        /// <summary>
+        /// Use this method to allow a client to connect.
+        /// 
+        /// Here tou should check if the approvalMessage is the same as in the client, if the room is not full
+        /// and if the state of the game allows clients to connect (i.e. in a lobby).
+        /// 
+        /// The default implementation always return true.
+        /// </summary>
+        /// <param name="approvalMessage"></param>
         protected virtual bool ApproveConnection(string approvalMessage)
         {
             return true;
         }
 
+        /// <summary>
+        /// Return a string unique to this game. This string is used to validate the clients, making sure it's from this game.
+        /// </summary>
+        /// <returns></returns>
         public virtual string GetApprovalString()
         {
             return string.Empty;
