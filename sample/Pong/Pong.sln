@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong", "Pong\Pong.csproj", "{56AFFDCA-076F-4DC0-895D-881C28381662}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PongCore", "PongCore\PongCore.csproj", "{B56F5C8A-E3CA-4172-BD60-C3CD0909B3AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56AFFDCA-076F-4DC0-895D-881C28381662}.Debug|x86.ActiveCfg = Debug|x86
+		{56AFFDCA-076F-4DC0-895D-881C28381662}.Debug|x86.Build.0 = Debug|x86
+		{56AFFDCA-076F-4DC0-895D-881C28381662}.Release|x86.ActiveCfg = Release|x86
+		{56AFFDCA-076F-4DC0-895D-881C28381662}.Release|x86.Build.0 = Release|x86
+		{B56F5C8A-E3CA-4172-BD60-C3CD0909B3AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B56F5C8A-E3CA-4172-BD60-C3CD0909B3AE}.Debug|x86.Build.0 = Debug|Any CPU
+		{B56F5C8A-E3CA-4172-BD60-C3CD0909B3AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{B56F5C8A-E3CA-4172-BD60-C3CD0909B3AE}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
