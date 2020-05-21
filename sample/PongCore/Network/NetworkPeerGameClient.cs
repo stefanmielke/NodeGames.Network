@@ -1,6 +1,7 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using NodeGames.Network;
 using NodeGames.Network.Network;
 using PongCore.Actors;
 
@@ -12,9 +13,9 @@ namespace PongCore.Network
 
         public NetworkPeerGameClient() : base(1, typeof(NetworkPeerGameClient).Assembly)
         {
-            _hashedNames.Add(CompatibilityManager.GetHashCode(typeof(Bar).Name), typeof(Bar));
-            _hashedNames.Add(CompatibilityManager.GetHashCode(typeof(Ball).Name), typeof(Ball));
-            _hashedNames.Add(CompatibilityManager.GetHashCode(typeof(GameState).Name), typeof(GameState));
+            _hashedNames.Add(CompatibilityManager.GetHashCode(nameof(Bar)), typeof(Bar));
+            _hashedNames.Add(CompatibilityManager.GetHashCode(nameof(Ball)), typeof(Ball));
+            _hashedNames.Add(CompatibilityManager.GetHashCode(nameof(GameState)), typeof(GameState));
         }
 
         /// <summary>
@@ -96,25 +97,6 @@ namespace PongCore.Network
         public override string GetApprovalString()
         {
             return "PongGame";
-        }
-    }
-
-    public static class CompatibilityManager
-    {
-        public static int GetHashCode(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-                return 0;
-
-            unchecked
-            {
-                int hash = 23;
-                foreach (char c in name)
-                {
-                    hash = hash * 31 + c;
-                }
-                return hash;
-            }
         }
     }
 }

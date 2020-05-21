@@ -14,7 +14,7 @@ namespace PongCore.Network
         /// <summary>
         /// Use this method to allow a client to connect.
         /// 
-        /// Here tou should check if the approvalMessage is the same as in the client ("PongGame" in this game), if the room is not full
+        /// Here you should check if the approvalMessage is the same as in the client ("PongGame" in this game), if the room is not full
         /// and if the state of the game allows clients to connect (i.e. in a lobby).
         /// </summary>
         /// <param name="approvalMessage"></param>

@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NodeGames.Network.Network;
@@ -9,16 +9,14 @@ namespace PongCore.Actors
 {
     public abstract class Actor : INetworkedActor
     {
-        public int Id { get; }
-        public bool ReplicateProperties { get; protected set; }
-        public bool ReplicateMovement { get; protected set; }
-        public bool IsDirty { get; set; }
-        public bool IsMovementDirty { get; set; }
-        public bool IsMarkedToDestroy { get; set; }
-        protected bool IsRemote { get; }
-
+        // current location - created for the sample
         public Vector2 Location;
+
+        // bounding box of the Bars - created for the sample
         public Rectangle BoundBox;
+
+        // if this actor is controlled remotely (eg.: this client doesn't own it)
+        protected bool IsRemote { get; }
 
         protected Actor(int id, Vector2 initialLocation, Rectangle boundBox, bool isRemote)
         {
@@ -41,6 +39,24 @@ namespace PongCore.Actors
 
         #region INetworkedActor
 
+        // unique Id of this actor, is unique across all instances
+        public int Id { get; }
+
+        // if it will replicate any property
+        public bool ReplicateProperties { get; protected set; }
+
+        // if it will replicate its movement (based on the Location property)
+        public bool ReplicateMovement { get; protected set; }
+
+        // if any property needs to be replicated
+        public bool IsDirty { get; set; }
+
+        // if the movement needs to be replicated
+        public bool IsMovementDirty { get; set; }
+
+        // if this actor should be destroyed
+        public bool IsMarkedToDestroy { get; set; }
+
         /// <summary>
         /// This code is called by the server to set the location on clients.
         /// </summary>
@@ -51,7 +67,7 @@ namespace PongCore.Actors
         }
 
         /// <summary>
-        /// This code only runs on clients, never on the server.
+        /// This code only runs on clients, never on the server, and is used to destroy the current actor
         /// </summary>
         public void RemoteDestroyed()
         {
@@ -75,14 +91,14 @@ namespace PongCore.Actors
         }
 
         /// <summary>
-        /// Used by the server to know where is the actor.
+        /// Used by the server to know where the actor is.
         /// </summary>
         NodeGames.Network.Network.Point INetworkedActor.GetLocation()
         {
             return new NodeGames.Network.Network.Point
             {
-                X = (int)Location.X,
-                Y = (int)Location.Y
+                X = (int) Location.X,
+                Y = (int) Location.Y
             };
         }
 

@@ -22,6 +22,10 @@ namespace PongCore.Actors
             ResetBall();
         }
 
+        /// <summary>
+        /// Whenever we score, we reset the ball position and set a random speed.
+        /// We should only call this on the server
+        /// </summary>
         private void ResetBall()
         {
             Location = _initialLocation;
@@ -38,6 +42,7 @@ namespace PongCore.Actors
             // you should update only the speed vector and let the client calculate as an optimization, but we'll keep it simple for now.
             if (!IsRemote)
             {
+                // since we update the ball every frame, we can set the flag here
                 IsMovementDirty = true;
 
                 Location += _speed * gameTime.ElapsedGameTime.Milliseconds;

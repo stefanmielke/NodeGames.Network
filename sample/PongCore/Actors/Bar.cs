@@ -19,6 +19,7 @@ namespace PongCore.Actors
         [RemoteCallable]
         public void SetLocationRemote(int y)
         {
+            // if it is not controlled by the current client, we set the location (only Y for the bar)
             if (IsRemote)
             {
                 Location.Y = y;
@@ -28,21 +29,25 @@ namespace PongCore.Actors
         public override void Update(GameTime gameTime, bool isActive, List<Actor> actors)
         {
             // the keyboard will only work on the owner and on an active window (so you can test both on the same machine)
+            // and we should only update the position if we are the owner of the Bar
             if (!IsRemote && isActive)
             {
                 var keyboardState = Keyboard.GetState();
 
                 if (keyboardState.IsKeyDown(Keys.Up))
                 {
+                    // we have to set the flag so this client will know that we have to update the others
                     IsMovementDirty = true;
                     Location.Y -= _speed * gameTime.ElapsedGameTime.Milliseconds;
                 }
                 if (keyboardState.IsKeyDown(Keys.Down))
                 {
+                    // we have to set the flag so this client will know that we have to update the others
                     IsMovementDirty = true;
                     Location.Y += _speed * gameTime.ElapsedGameTime.Milliseconds;
                 }
 
+                // we call the method on the server to update the other clients (and the server)
                 PongGame.Instance.Network.CallMethodOnServer(Id, "SetLocationRemote", false, (int)Location.Y);
             }
         }

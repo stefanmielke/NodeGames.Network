@@ -54,6 +54,9 @@ namespace PongCore.Actors
             IsDirty = true;
         }
 
+        /// <summary>
+        /// Set the correct score message based on the current score.
+        /// </summary>
         private void ReconstructScore()
         {
             _score = $"{_pointsLeft} - {_pointsRight}";
@@ -64,9 +67,11 @@ namespace PongCore.Actors
         /// </summary>
         public override void Serialize(INetworkMessageOut message)
         {
+            // remember to write on the same sequence that we read
             message.Write(_pointsLeft);
             message.Write(_pointsRight);
 
+            // always call the base Serialize to ensure all properties are replicated
             base.Serialize(message);
         }
 
@@ -75,11 +80,13 @@ namespace PongCore.Actors
         /// </summary>
         public override void Deserialize(INetworkMessageIn message)
         {
+            // remember to read on the same sequence that we write
             _pointsLeft = message.ReadInt();
             _pointsRight = message.ReadInt();
 
             ReconstructScore();
 
+            // always call the base Deserialize to ensure all properties are replicated
             base.Deserialize(message);
         }
     }
