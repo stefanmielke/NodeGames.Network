@@ -298,11 +298,11 @@ Network = new NetworkLidgren<NetworkPeerGameServer, NetworkPeerGameClient>(
 
 ```csharp
 // on server
-Network.CreateSession("gameSessionName"); // on the server
-Network.ServerTravel(1, "defaultWorldBuilder", "defaultLevelName", 800, 600); // change the map
+Network.CreateSession("gameSessionName");
+Network.ServerTravel(1, "defaultWorldBuilder", "defaultLevelName", 800, 600); // change to the initial map
 
 // on client
-Network.JoinSession("gameSessionName"); // on the client
+Network.JoinSession("gameSessionName");
 ```
  - update networking every frame
  
