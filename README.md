@@ -181,10 +181,14 @@ public class NetworkPeerGameClient : NetworkPeerClient
 ```csharp
 public abstract class Actor : INetworkedActor
 {
-	// current location - created for the sample
+    // current location - created for the sample
     public Vector2 Location;
+    
     // bounding box of the Bars - created for the sample
     public Rectangle BoundBox;
+    
+    // if this actor is controlled remotely (eg.: this client doesn't own it)
+    protected bool IsRemote { get; }
 
     protected Actor(int id, Vector2 initialLocation, Rectangle boundBox, bool isRemote)
     {
@@ -207,7 +211,7 @@ public abstract class Actor : INetworkedActor
 
     #region INetworkedActor
 
-	// unique Id of this actor, is unique across all instances
+    // unique Id of this actor, is unique across all instances
     public int Id { get; }
     
     // if it will replicate any property
@@ -216,17 +220,14 @@ public abstract class Actor : INetworkedActor
     // if it will replicate its movement (based on the Location property)
     public bool ReplicateMovement { get; protected set; }
 
-	// if any property needs to be replicated
+    // if any property needs to be replicated
     public bool IsDirty { get; set; }
     
-	// if the movement needs to be replicated
+    // if the movement needs to be replicated
     public bool IsMovementDirty { get; set; }
 
-	// if this actor should be destroyed
+    // if this actor should be destroyed
     public bool IsMarkedToDestroy { get; set; }
-    
-    // if this actor is controlled remotely (eg.: this client doesn't own it)
-    protected bool IsRemote { get; }
 
     /// <summary>
     /// This code is called by the server to set the location on clients.
@@ -280,34 +281,34 @@ public abstract class Actor : INetworkedActor
 - use your new classes
  - instantiate your Network:
 
-		```csharp
-		Network = new NetworkLidgren<NetworkPeerGameServer, NetworkPeerGameClient>(
-			new NetworkConfiguration
-	        {
-	            ClientPort = 8082, // port for the client
-	            ConnectionIp = "127.0.0.1", // change to the server IP address
-	            ExternalIp = false, // not used by the current implementations
-	            ServerPort = 8081, // port for the server - use a different port if running on the same machine
-	            ServerTick = 60, // server ticks per second, the higher the more accurate, but uses more network traffic
-	            Type = NetworkType.Server // or "NetworkType.Client" if is the client connecting
-	        }
-		);
-		```
+```csharp
+Network = new NetworkLidgren<NetworkPeerGameServer, NetworkPeerGameClient>(
+	new NetworkConfiguration
+{
+    ClientPort = 8082, // port for the client
+    ConnectionIp = "127.0.0.1", // change to the server IP address
+    ExternalIp = false, // not used by the current implementations
+    ServerPort = 8081, // port for the server - use a different port if running on the same machine
+    ServerTick = 60, // server ticks per second, the higher the more accurate, but uses more network traffic
+    Type = NetworkType.Server // or "NetworkType.Client" if is the client connecting
+}
+);
+```
  - create a session on the server, or join an existing session
 
-		```csharp
-		// on server
-		Network.CreateSession("gameSessionName"); // on the server
-		Network.ServerTravel(1, "defaultWorldBuilder", "defaultLevelName", 800, 600); // change the map
+```csharp
+// on server
+Network.CreateSession("gameSessionName"); // on the server
+Network.ServerTravel(1, "defaultWorldBuilder", "defaultLevelName", 800, 600); // change the map
 
-		// on client
-		Network.JoinSession("gameSessionName"); // on the client
-		```
+// on client
+Network.JoinSession("gameSessionName"); // on the client
+```
  - update networking every frame
  
-		```csharp
-		Network.Update((float)gameTime.TotalGameTime.TotalMilliseconds);
-		```
+```csharp
+Network.Update((float)gameTime.TotalGameTime.TotalMilliseconds);
+```
 
 - create your actor classes (examples on the sample under "Actors")
 
