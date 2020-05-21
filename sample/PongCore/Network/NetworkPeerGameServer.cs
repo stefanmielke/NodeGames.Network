@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿﻿using System.Linq;
 using Microsoft.Xna.Framework;
 using NodeGames.Network.Network;
-using Pong.Actors;
+using PongCore.Actors;
 
-namespace Pong.Network
+namespace PongCore.Network
 {
     public class NetworkPeerGameServer : NetworkPeerServer
     {

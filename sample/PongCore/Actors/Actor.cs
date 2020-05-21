@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NodeGames.Network.Network;
 using NodeGames.Network.Network.Messages;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
-namespace Pong.Actors
+namespace PongCore.Actors
 {
     public abstract class Actor : INetworkedActor
     {

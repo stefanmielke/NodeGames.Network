@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -6,10 +6,10 @@ using MonoGame.Extended.BitmapFonts;
 using NodeGames.Network.Lidgren;
 using NodeGames.Network.Network;
 using NodeGames.Network.Network.Implementations;
-using Pong.Actors;
-using Pong.Network;
+using PongCore.Actors;
+using PongCore.Network;
 
-namespace Pong
+namespace PongCore
 {
     public class PongGame : Game
     {

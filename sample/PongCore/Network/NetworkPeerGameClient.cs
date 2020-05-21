@@ -1,11 +1,10 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Microsoft.Xna.Framework;
 using NodeGames.Network.Network;
-using Pong.Actors;
+using PongCore.Actors;
 
-namespace Pong.Network
+namespace PongCore.Network
 {
     public class NetworkPeerGameClient : NetworkPeerClient
     {

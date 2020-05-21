@@ -1,11 +1,11 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Shapes;
+using MonoGame.Extended;
 
-namespace Pong.Actors
+namespace PongCore.Actors
 {
     public class Ball : Actor
     {

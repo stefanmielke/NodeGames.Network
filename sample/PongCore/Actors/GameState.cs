@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
 using NodeGames.Network.Network.Messages;
 
-namespace Pong.Actors
+namespace PongCore.Actors
 {
     /// <summary>
     /// Class to keep the game state synchronized between machines.

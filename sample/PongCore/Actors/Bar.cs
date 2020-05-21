@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Shapes;
+using MonoGame.Extended;
 using NodeGames.Network;
 
-namespace Pong.Actors
+namespace PongCore.Actors
 {
     public class Bar : Actor
     {
