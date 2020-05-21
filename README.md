@@ -355,8 +355,9 @@ struct NetworkStats
 
 - Do not serialize movement data. It's already covered on a different path inside the library.
 - Setting ```ReplicateProperties``` and ```ReplicateMovement``` correctly may save a lot of bandwidth.
- - If an actor doesn't change movement during its lifetime (eg.: a static object, or a bullet), prefer to push the movement on creation, and do not set ```ReplicateMovement``` to true, relying on the server to destroy the object when needed.
- - Set the ```IsDirty``` and ```IsMovementDirty``` flags only when needed. That is used internally to transmit data across clients.
+	- If an actor doesn't change movement during its lifetime (eg.: a static object, or a bullet), prefer to push the movement on creation, and do not set ```ReplicateMovement``` to true, relying on the server to destroy the object when needed.
+- Set the ```IsDirty``` and ```IsMovementDirty``` flags only when needed. That is used internally to transmit data across clients.
+- ```CallMethodOnServer``` and ```CallMethodOnClients``` have a "reliable" flag. Use it as true only for calls that you won't be calling all the time (eg.: causing damage, or changing weapons), as that may incur a penalty when transmitting if the message fails or times out.
 
 ### Network Flow
 
